@@ -2,6 +2,8 @@
   var G = Graph(GraphData);
   $(document).on("click", "#goBtn", function() {
     var paperId = parseInt($("#paperTxt").val(), 10);
+    var graphDepth = parseInt($("#graphDepthTxt").val(), 10);
+    var dirSearch = $("#dirOnlyTxt").val() === "Y";
     if (!G.hasNode(paperId)) {
       alert("Could not find paper with given ID");
       return;
@@ -16,8 +18,9 @@
     });
     $("#citesHeading").text("Cites " + cites.length + " paper(s)");
     $("#citedByHeading").text("Cited by " + citedBy.length + " paper(s)");
+    console.log(dirSearch);
 
-    var g = G.graphWithinDepth(paperId, 100);
+    var g = G.graphWithinDepth(paperId, graphDepth, dirSearch);
     CyHelper.create("cy", g);
   });
 })();

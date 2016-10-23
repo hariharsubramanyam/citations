@@ -100,7 +100,7 @@ Graph = function(data) {
     return inNeighbor;
   };
 
-  that.graphWithinDepth = function(sourceId, depth) {
+  that.graphWithinDepth = function(sourceId, depth, dirOnly) {
     // Default the depth to the whole graph.
     depth = depth || nodes.size;
 
@@ -122,9 +122,11 @@ Graph = function(data) {
             toProcess.push([nid, dep+1]);
           }
         }
-        for (nid of nodes.get(id).reverseNeighborIds()) {
-          if (!doneIds.has(nid)) {
-            toProcess.push([nid, dep+1]);
+        if (!dirOnly) {
+          for (nid of nodes.get(id).reverseNeighborIds()) {
+            if (!doneIds.has(nid)) {
+              toProcess.push([nid, dep+1]);
+            }
           }
         }
       }

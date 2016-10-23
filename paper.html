@@ -41,12 +41,16 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <div class="input-group">
-            <input id="paperTxt" type="text" class="form-control" placeholder="Paper number...">
-            <span class="input-group-btn">
-              <button id="goBtn" class="btn btn-default" type="button">Go!</button>
-            </span>
-          </div><!-- /input-group -->
+					<div class="input-group">
+							<input id="paperTxt" type="text" class="form-control input-sm" placeholder="Paper ID number..."/>
+							<span class="input-group-btn" style="width:0px;"></span>
+							<input id="graphDepthTxt" type="text" class="form-control input-sm" placeholder="Depth of Graph..." style="margin-left:-1px" />
+							<span class="input-group-btn" style="width:0px;"></span>
+							<input id="dirOnlyTxt" type="text" class="form-control input-sm" placeholder="Do Directed Edge Search? (Y or N)..." style="margin-left:-1px" />
+              <span class="input-group-btn">
+                <button id="goBtn" class="btn btn-default input-sm" type="button">Go!</button>
+              </span>
+					</div>
         </div><!-- /.col-lg-6 -->
       </div><!-- /.row -->
       <div class="row">
