@@ -18,6 +18,10 @@ Node = function(id) {
     return neighbors.keys();
   };
 
+  that.hasNeighbor = function(neighborId) {
+    return neighbors.has(neighborId);
+  };
+
   that.numNeighbors = function() {
     return neighbors.size;
   };
@@ -43,6 +47,10 @@ Graph = function(data) {
     }
   };
 
+  that.getNode  = function(id) {
+    return nodes.get(id);
+  };
+
   that.addNode = function(id) {
     if (!nodes.has(id)) {
       nodes.set(id, Node(id));
@@ -51,6 +59,20 @@ Graph = function(data) {
 
   that.numNodes = function() {
     return nodes.size;
+  };
+
+  that.neighborIds = function(id) {
+    return Array.from(nodes.get(id).neighborIds());
+  };
+
+  that.inNeighborIds = function(id) {
+    var inNeighbor = [];
+    for (var n of nodes.values()) {
+      if (n.hasNeighbor(id)) {
+        inNeighbor.push(n.id());
+      }
+    }
+    return inNeighbor;
   };
 
   that.sortedByDegrees = function() {
