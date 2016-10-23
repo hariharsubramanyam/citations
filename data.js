@@ -1,5 +1,6 @@
 // The pairs are [paper, cites].
 GraphData = [
+  [3, 3],
 	[2, 1],
 	[4, 1],
 	[6, 1],

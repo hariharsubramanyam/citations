@@ -10,9 +10,11 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="./cytoscape.js"></script>
   <script src="./data.js"></script>
   <script src="./graph.js"></script>
   <script src="./common.js"></script>
+  <script src="./cytoscape_helper.js"></script>
   <script src="./paper.js"></script>
 </head>
 <body>
@@ -49,12 +51,15 @@
       </div><!-- /.row -->
       <div class="row">
         <div class="col-md-2">
-          <h2>Citers</h2>
+          <h2 id="citesHeading">Cites</h2>
 					<ul id="citersListGroup" class="list-group"></ul>
         </div>
         <div class="col-md-2">
-          <h2>Cited By</h2>
+          <h2 id="citedByHeading">Cited By</h2>
           <ul id="citedListGroup" class="list-group"></ul>
+        </div>
+        <div class="col-md-8">
+          <div id="cy"></div>
         </div>
       </div><!-- /.row -->
     </div><!-- /.container -->

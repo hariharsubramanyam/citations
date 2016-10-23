@@ -4,18 +4,36 @@ Node = function(id) {
   // Map from ID to true.
   var neighbors = new Map();
 
+  var reverseNeighbors = new Map();
+
   that.id = function() {
     return id;
+  };
+
+  that.addReverseEdge = function(destId) {
+    if (id !== destId && !reverseNeighbors.has(destId)) {
+      reverseNeighbors.set(destId, true);
+      return true;
+    } else {
+      return false;
+    }
   };
 
   that.addEdge = function(destId) {
     if (id !== destId && !neighbors.has(destId)) {
       neighbors.set(destId, true);
+      return true;
+    } else {
+      return false;
     }
   };
 
   that.neighborIds = function() {
     return neighbors.keys();
+  };
+
+  that.reverseNeighborIds = function() {
+    return reverseNeighbors.keys();
   };
 
   that.hasNeighbor = function(neighborId) {
@@ -36,15 +54,22 @@ Graph = function(data) {
   // Map from id to Node.
   var nodes = new Map();
 
-  // Array of two-element (source, destination) arrays.
-  var edges = data.map(function(e) {
-    return e;
-  });
+  // Contains [src, dst] pairs.
+  var edges = [];
+
 
   that.addEdge = function(sourceId, destId) {
     if (nodes.has(sourceId)) {
-      nodes.get(sourceId).addEdge(destId);
+      var addedEdge = nodes.get(sourceId).addEdge(destId);
+      if (addedEdge) {
+        edges.push([sourceId, destId]);
+      }
+      nodes.get(destId).addReverseEdge(sourceId);
     }
+  };
+
+  that.hasNode = function(id) {
+    return nodes.has(id);
   };
 
   that.getNode  = function(id) {
@@ -73,6 +98,48 @@ Graph = function(data) {
       }
     }
     return inNeighbor;
+  };
+
+  that.graphWithinDepth = function(sourceId, depth) {
+    // Default the depth to the whole graph.
+    depth = depth || nodes.size;
+
+    // Create a stack to hold the nodes to process.
+    var toProcess = [[sourceId, 0]];
+    var doneIds = new Map();
+
+    // Do a BFS up to the given depth.
+    while (toProcess.length > 0) {
+      var procMe = toProcess.shift();
+      var id = procMe[0];
+      var dep = procMe[1];
+      doneIds.set(id, true);
+
+      if (dep < depth) {
+        var nid;
+        for (nid of nodes.get(id).neighborIds()) {
+          if (!doneIds.has(nid)) {
+            toProcess.push([nid, dep+1]);
+          }
+        }
+        for (nid of nodes.get(id).reverseNeighborIds()) {
+          if (!doneIds.has(nid)) {
+            toProcess.push([nid, dep+1]);
+          }
+        }
+      }
+
+    }
+
+    // Create an array of the node IDs and the edges.
+    var gNodes = Array.from(doneIds.keys());
+    var gEdges = edges.filter(function(edge) {
+      return doneIds.has(edge[0]) && doneIds.has(edge[1]);
+    });
+    return {
+      "nodes": gNodes,
+      "edges": gEdges
+    };
   };
 
   that.sortedByDegrees = function() {
