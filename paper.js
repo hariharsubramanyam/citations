@@ -3,7 +3,7 @@
   $(document).on("click", "#goBtn", function() {
     var paperId = parseInt($("#paperTxt").val(), 10);
     var graphDepth = parseInt($("#graphDepthTxt").val(), 10);
-    var dirSearch = $("#dirOnlyTxt").val() === "Y";
+    var dirSearch = parseInt($("#dirOnlyTxt").val(), 10);
     if (!G.hasNode(paperId)) {
       alert("Could not find paper with given ID");
       return;
