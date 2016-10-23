@@ -3,5 +3,6 @@ body {
 }
 
 #cy {
-  height: 900px;
+  border: 1px solid blue;
+  height: 400px;
 }
